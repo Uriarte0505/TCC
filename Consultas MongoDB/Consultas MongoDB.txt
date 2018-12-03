@@ -1,0 +1,67 @@
+Comandos importantes:
+
+>mongod - Inicializar banco
+>mongo - Inicializar prompt
+>use osm - Seleciona a base de dados osm
+>query.explain("executionStats") - Mostra dados do planejamento da consulta e da execução, como tempo e quantidade de documntos pesquisado, resultados retornados.
+
+
+~> Liechtenstein
+
+MongoDB:
+- Within:
+
+Liechtenstein:
+db.nodes.find({geometry: {$geoWithin: { $centerSphere: [ [  9.5242002, 47.1405701 ], 12/ 6371 ]}}}).explain("executionStats")
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [ 9.5242002, 47.1405701 ], 150/6371 ]}}}).explain("executionStats")
+
+Colombia:
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [ -74.14606074859216, 4.700912450000001 ], 12/ 6371 ]}}}).explain("executionStats")
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [ -74.14606074859216, 4.700912450000001 ], 150/6371 ]}}}).explain("executionStats")
+
+Chile:
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [  -70.79417391985464, -33.388679249999996 ], 12/ 6371 ]}}}).explain("executionStats")
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [ -70.79417391985464, -33.388679249999996 ], 150/6371 ]}}}).explain("executionStats")
+
+América Central:
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [  -86.168755740802, 12.14039905 ], 12/ 6371 ]}}}).explain("executionStats")
+db.nodes.find({loc: {$geoWithin: { $centerSphere: [ [ -86.168755740802, 12.14039905 ], 150/6371 ]}}}).explain("executionStats")
+
+
+- Intersects:
+
+Liechtenstein:
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[9.5097211464,47.1558570829],[9.5586009272,47.1558570829],[9.5586009272,47.2109385806],[9.5097211464,47.2109385806],[9.5097211464,47.1558570829]]]}}}}).explain("executionStats")
+db.nodes.find({geometry: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[9.5149710667,47.0677944389],[9.6101685966,47.0677944389],[9.6101685966,47.1863339559],[9.5149710667,47.1863339559],[9.5149710667,47.0677944389]]]}}}}).explain("executionStats")
+
+Colombia:
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[-75.7982040942,5.065987494],[-74.0512200777,5.065987494],[-74.0512200777,5.9344189261],[-75.7982040942,5.9344189261],[-75.7982040942,5.065987494]]]}}}}).explain("executionStats")
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[-70.3089756734,0.1977504152],[-77.112947051,0.3251876786],[-76.9896768915,6.8899403949],[-70.1857055139,6.7634053088],[-70.3089756734,0.1977504152]]]}}}}).explain("executionStats")
+
+Chile:
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[-71.8031632681,-34.3363776491],[-70.9475924911,-34.3363776491],[-70.9475924911,-33.4103920585],[-71.8031632681,-33.4103920585],[-71.8031632681,-34.3363776491]]]}}}}).explain("executionStats")
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[-71.6656992185,-34.1696728485],[-70.7209357329,-34.1696728485],[-70.7209357329,-29.3731005996],[-71.6656992185,-29.3731005996],[-71.6656992185,-34.1696728485]]]}}}}).explain("executionStats")
+
+América Central:
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[-87.5763703779,12.8054935579],[-85.0535470532,12.8054935579],[-85.0535470532,15.5611151014],[-87.5763703779,15.5611151014],[-87.5763703779,12.8054935579]]]}}}}).explain("executionStats")
+db.nodes.find({loc: {$geoIntersects:{$geometry: {type: "Polygon",coordinates: [[[-89.0083365836,13.2433273728],[-83.6675302742,13.2433273728],[-83.6675302742,15.6250254777],[-89.0083365836,15.6250254777],[-89.0083365836,13.2433273728]]]}}}}).explain("executionStats")
+
+- Near:
+
+Liechtenstein:
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[9.5242002, 47.1405701]},$maxDistance: 12000}}}).explain("executionStats")
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[9.5242002, 47.1405701 ]},$maxDistance: 150000}}}).explain("executionStats")
+
+Colombia:
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[-74.14606074859216,4.700912450000001]},$maxDistance: 12000}}}).explain("executionStats")
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[-74.14606074859216,4.700912450000001]},$maxDistance: 150000}}}).explain("executionStats")
+
+Chile:
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[-70.79417391985464,-33.388679249999996]},$maxDistance: 12000}}}).explain("executionStats")
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[-70.79417391985464,-33.388679249999996]},$maxDistance: 150000}}}).explain("executionStats")
+
+América Central:
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[-86.168755740802,12.14039905]},$maxDistance: 12000}}}).explain("executionStats")
+db.nodes.find({loc: {$near:{$geometry:{type: "Point",coordinates:[-86.168755740802,12.14039905]},$maxDistance: 150000}}}).explain("executionStats")
+
+
